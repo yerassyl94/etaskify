@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      TZ: "Asia/Almaty"
+      POSTGRES_PASSWORD: userManagerDB123
+      POSTGRES_DB: user-manager-db
+      POSTGRES_USER: userManager
+    ports:
+      - "5434:5432"
+    networks:
+      - etaskify_app-net
+  user-manager:
+    image: 'user-manager-app'
+    build:
+      context: .
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    networks:
+      - etaskify_app-net
+
+networks:
+  etaskify_app-net:
+    external: true

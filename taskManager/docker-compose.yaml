@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      TZ: "Asia/Almaty"
+      POSTGRES_PASSWORD: taskManagerDB123
+      POSTGRES_DB: task-manager-db
+      POSTGRES_USER: taskManager
+    ports:
+      - "5436:5432"
+    networks:
+      - etaskify_app-net
+  task-manager:
+    image: 'task-manager-app'
+    build:
+      context: .
+    depends_on:
+      - db
+    ports:
+      - "8083:8083"
+    networks:
+      - etaskify_app-net
+
+networks:
+  etaskify_app-net:
+    external: true

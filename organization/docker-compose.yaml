@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      TZ: "Asia/Almaty"
+      POSTGRES_PASSWORD: organizationDB123
+      POSTGRES_DB: organization-db
+      POSTGRES_USER: organization
+    ports:
+      - "5433:5432"
+    networks:
+      - etaskify_app-net
+  organization:
+    image: 'organization-app'
+    container_name: organization-container
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - etaskify_app-net
+
+networks:
+  etaskify_app-net:
+    external: true

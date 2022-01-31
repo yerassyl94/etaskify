@@ -1,0 +1,2 @@
+#!/bin/sh
+docker-compose up --build & sleep 10 && docker-compose -f ./organization/docker-compose.yaml up --build & sleep 10 && docker-compose -f ./userManager/docker-compose.yaml up --build & sleep 10 && docker-compose -f ./authorization/docker-compose.yaml up --build & sleep 10 && docker-compose -f ./taskManager/docker-compose.yaml up --build
