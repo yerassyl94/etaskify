@@ -1,4 +1,4 @@
-package com.taskify.authorization;
+package com.taskify.organization;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

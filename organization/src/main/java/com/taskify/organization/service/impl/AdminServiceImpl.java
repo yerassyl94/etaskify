@@ -7,7 +7,6 @@ import com.taskify.organization.repository.AdminRepository;
 import com.taskify.organization.service.AdminService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
-class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService {
     private AdminRepository adminRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -39,14 +38,14 @@ class AdminServiceImpl implements AdminService {
         return adminRepository.findByUsername(username).orElse(null);
     }
 
-    private void checkUsername(@NonNull String username){
+    public void checkUsername(@NonNull String username){
         Boolean isUsernameOccupied = adminRepository.existsByUsernameContainingIgnoreCase(username);
         if (isUsernameOccupied){
             throw new AlreadyExistsException(String.format("Admin with username: %s already exists", username));
         }
     }
 
-    private void checkEmail(@NonNull String email){
+    public void checkEmail(@NonNull String email){
         String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         Pattern pattern = Pattern.compile(emailPattern);
         Matcher matcher = pattern.matcher(email);
@@ -60,7 +59,7 @@ class AdminServiceImpl implements AdminService {
         }
     }
 
-    private void checkPassword(@NonNull String password){
+    public void checkPassword(@NonNull String password){
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$";
         Pattern pattern = Pattern.compile(passwordPattern);
         Matcher matcher = pattern.matcher(password);
